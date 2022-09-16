@@ -31,8 +31,37 @@
         OnConfirm="OrderState.ConfirmConfigurePizzaDialog" />
 }
 
+<div class="sidebar">
+    @if (order.Pizzas.Any())
+    {
+        <div class="order-contents">
+            <h2>Your order</h2>
+            @foreach (var pizza in order.Pizzas)
+            {
+                <div class="cart-item">
+                    <div class="title">@(pizza.Size)" @pizza.Special.Name</div>
+                    <div class="item-price">@pizza.GetFormattedTotalPrice()</div>
+                    <a @onclick="@(() => OrderState.RemoveConfiguredPizza(pizza))" class="delete-item">X</a>
+                </div>
+            }
+        </div>
+    }
+    else 
+    {
+        <div class="empty-cart">Choose a pizza<br>to get started</div>
+    }
+    <div class="order-total @(order.Pizzas.Any() ? "" : "hidden")">
+        Total: 
+        <span class="total-price">@order.GetFormattedTotalPrice()</span>
+        <a href="checkout" class="@(order.Pizzas.Any() ? "btn btn-warning" : "btn btn-warning disabled")">
+            Order
+        </a>
+    </div>
+</div>
+
 @code {
     private List<PizzaSpecial> specials = new();
+    private Order order => OrderState.Order;
 
     protected override async Task OnInitializedAsync()
     {

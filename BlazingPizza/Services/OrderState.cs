@@ -29,6 +29,11 @@ public class OrderState
         ResetState();
     }
 
+    public void RemoveConfiguredPizza(Pizza pizza)
+    {
+        Order.Pizzas.Remove(pizza);
+    }
+
     private void ResetState()
     {
         ConfiguringPizza = default;

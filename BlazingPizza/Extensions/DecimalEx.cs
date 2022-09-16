@@ -2,5 +2,6 @@
 
 public static class DecimalEx
 {
-    public static string ToFormattedPrice(this decimal source) => source.ToString("0.00");
+    public static string ToFormattedPrice(this decimal source)
+        => source.ToString("C2");
 }
